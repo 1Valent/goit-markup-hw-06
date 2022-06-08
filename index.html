@@ -411,15 +411,62 @@
                     </li>
                 </ul>
             </div>
+            <div class="action-form">
+                <div class="action-form-field">
+                    <label class="action-form-label" for="mail">Подпишитесь на рассылку</label>
+                    <input class="action-form-mail" type="email" name="mail" id="mail" placeholder="E-mail">
+                </div>
+                <button class="action-form-btn" type="submit">Подписаться</button>
+            </div>
         </div>
     </footer>
     <div class="backdrop is-hidden" data-modal>
         <div class="modal">
             <button type="button" class="modal-close-btn" data-modal-close>
             </button>
-            <p></p>
+            <form class="form js-speaker-form" autocomplete="on">
+                <div class="form-field">
+                    <label class="form-label" for="user-name">Имя</label>
+                    <input class="form-input" type="text" name="user-name" id="user-name" placeholder="Max Muster" />
+                </div>
+
+                <div class="form-field">
+                    <label class="form-label" for="tel">Телефон</label>
+                    <input class="form-input" type="tel" name="tel" id="tel" placeholder="+380 ** 123 45 67" />
+                </div>
+
+                <div class="form-field">
+                    <label class="form-label" for="mail">Почта</label>
+                    <input class="form-input" type="email" name="mail" id="mail " placeholder="maxmuster@gmail.com" />
+                </div>
+
+                <div class="form-field">
+                    <label class="form-label" for="comment">Комментарий</label>
+                    <textarea class="comment" name="comment" id="comment" rows="8"
+                        placeholder="Введите текст"></textarea>
+                </div>
+
+                <div class="form-field">
+                    <input type="checkbox" name="agreements" id="agreements" />
+                    <label class="form-label" for="agreements">Соглашаюсь с рассылкой и принимаю
+                        Условия договора</label>
+                </div>
+
+                <button type="submit">Оставить заявку</button>
+            </form>
         </div>
     </div>
+    <script>
+        (() => {
+            document.querySelector('.js-speaker-form').addEventListener('submit', e => {
+                e.preventDefault();
+
+                new FormData(e.currentTarget).forEach((value, name) =>
+                    console.log(`${name}: ${value}`),
+                );
+            });
+        })();
+    </script>
     <script>
         // position fixed - js mode
         // console.log(document.querySelector(".nav-section").getBoundingClientRect().height);
