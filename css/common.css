@@ -18,6 +18,15 @@
   --transition-timing-function: 500ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+/* пример без аутлайнов  */
+li,
+input,
+a,
+button,
+textarea {
+  outline: transparent;
+}
+
 h1,
 h2,
 h3,
@@ -455,11 +464,7 @@ svg {
 .team-list {
   display: flex;
 }
-.team-item {
-  /* box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.12), 0px 1px 1px rgba(0, 0, 0, 0.14),
-    0px 2px 1px rgba(0, 0, 0, 0.2);
-  border-radius: 0px 0px 4px 4px; */
-}
+
 .team-item:not(:last-child) {
   margin-right: 30px;
 }
@@ -681,17 +686,23 @@ svg {
   height: 50px;
   padding: 15px 0 15px 16px;
   background-color: var(--hero-footer-color);
-  color: rgba(255, 255, 255, 0.6);
+  color: rgba(255, 255, 255);
   border: 1px solid rgba(255, 255, 255, 0.3);
   filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.15));
   border-radius: 4px;
   cursor: pointer;
+  transition: var(--transition-timing-function);
 }
 
 .action-form-mail::placeholder {
   font-size: 16px;
   line-height: 1.25;
   color: rgba(255, 255, 255, 0.6);
+}
+
+.action-form-mail:hover,
+.action-form-mail:focus {
+  border: 1px solid rgba(255, 255, 255);
 }
 
 .action-form-btn {
@@ -773,18 +784,19 @@ svg {
 
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.3);
+  background: linear-gradient(to right, rgb(31, 28, 44, 0.9), rgba(146, 141, 171, 0.1));
   transition: opacity var(--transition-timing-function);
 }
 .backdrop.is-hidden {
   opacity: 0;
   pointer-events: none;
 }
-.backdrop.is-hidden .modal {
+.backdrop.is-hidden .form {
   transform: translate(-150%, -100%) scale(0.4) rotateZ(0deg);
   opacity: 0;
 }
-.modal {
+
+.form {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -794,12 +806,12 @@ svg {
 
   width: 528px;
   height: 581px;
-  background-color: var(--accent-color);
+  background: rgba(255, 255, 255, 0.9);
 
   transition: transform var(--transition-timing-function), opacity var(--transition-timing-function);
 }
 
-.modal-close-btn {
+.form-close-btn {
   display: block;
   position: absolute;
   top: 8px;
@@ -823,12 +835,17 @@ svg {
   margin: 0 auto;
 }
 
-.modal-close-btn:hover .close-btn-icon,
-.modal-close-btn:focus .close-btn-icon {
+.form-close-btn:hover,
+.form-close-btn:focus {
+  border: 1px solid var(--accent-bgc);
+}
+
+.form-close-btn:hover .close-btn-icon,
+.form-close-btn:focus .close-btn-icon {
   fill: var(--accent-bgc);
 }
 
-.modal-title {
+.form-title {
   font-size: 20px;
   line-height: 1.15;
   text-align: center;
@@ -838,8 +855,8 @@ svg {
   padding-bottom: 12px;
 }
 
-.form {
-  width: 100%;
+.form-title-accent {
+  color: var(--accent-bgc);
 }
 
 .form-field {
@@ -857,6 +874,8 @@ svg {
 
   letter-spacing: 0.01em;
   color: var(--low-text-color);
+
+  transition: var(--transition-timing-function);
 }
 
 .form-field .form-input {
@@ -866,25 +885,23 @@ svg {
   font-size: 12px;
   line-height: 1.16;
   letter-spacing: 0.01em;
-  color: var(--low-text-color);
+  color: var(--main-text-color);
   border: 1px solid rgba(33, 33, 33, 0.2);
   border-radius: 4px;
   cursor: pointer;
+  background-color: rgb(255, 255, 255, 0.5);
+
+  transition: var(--transition-timing-function);
+}
+
+.form-field .form-input::placeholder {
+  opacity: 0.5;
 }
 
 .form-field .form-input:hover,
 .form-field .form-input:focus {
   border-color: var(--accent-bgc);
-  transition: var(--transition-timing-function);
-}
-
-.form-field .form-input:hover + .form-icon,
-.form-field .form-input:focus + .form-icon {
-  fill: var(--accent-bgc);
-  transition: var(--transition-timing-function);
-}
-.form-field .form-input::placeholder {
-  opacity: 0.5;
+  background-color: var(--accent-color);
 }
 
 .form-icon {
@@ -892,6 +909,12 @@ svg {
   position: absolute;
   top: 50%;
   left: 12px;
+  transition: var(--transition-timing-function);
+}
+
+.form-field .form-input:hover + .form-icon,
+.form-field .form-input:focus + .form-icon {
+  fill: var(--accent-bgc);
 }
 
 .comment-field {
@@ -919,6 +942,7 @@ svg {
   line-height: 1.71;
   letter-spacing: 0.03em;
   color: var(--low-text-color);
+  cursor: pointer;
 }
 
 .agreements-link {
@@ -953,8 +977,25 @@ svg {
 .form-checkbox:checked + .form-accept-icon {
   background-color: var(--accent-bgc);
   border-color: transparent;
+  fill: var(--accent-color);
   transform: scale(1.2);
 }
+
+.form-field:focus-within .form-label {
+  color: #2196f3;
+}
+
+.form-input:not(:placeholder-shown):required:valid {
+  border-color: #4caf50;
+}
+
+.form-input:not(:placeholder-shown):required:invalid {
+  border-color: #f44336;
+}
+
+/* .form-checkbox:not(:checked):required:invalid {
+  border-color: #f44336;
+} */
 
 /* .form-checkbox:checked + .form-accept-icon {
   background-image: url(../images/modal-theme-icons/icon-check.svg);
